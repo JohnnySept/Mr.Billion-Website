@@ -1,6 +1,9 @@
 {
   "name": "mrbillion-shorts-stories",
-  "version": "3.0.0",
+  "version": "4.0.0",
   "private": true,
-  "description": "MR.BILLION creator website with YouTube Shorts, videos and Gemini-generated stories"
+  "description": "MR.BILLION creator website with shared, pre-generated Gemini articles",
+  "dependencies": {
+    "@netlify/blobs": "^8.2.0"
+  }
 }
