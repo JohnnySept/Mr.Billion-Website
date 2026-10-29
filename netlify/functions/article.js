@@ -1,4 +1,4 @@
-const { getStore } = require('@netlify/blobs');
+const { getStore, connectLambda } = require('@netlify/blobs');
 const json = (statusCode, body) => ({
   statusCode,
   headers: { 'Content-Type': 'application/json; charset=utf-8', 'Cache-Control': 'no-store' },
@@ -6,6 +6,9 @@ const json = (statusCode, body) => ({
 });
 
 exports.handler = async (event) => {
+  // This is a Lambda-compatibility (Functions v1) handler, so initialize Blobs
+  // from the invocation event before calling getStore.
+  connectLambda(event);
   if (event.httpMethod !== 'POST') return json(405, { error: 'Use POST.' });
   try {
     let body = {};

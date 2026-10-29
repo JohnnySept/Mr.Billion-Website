@@ -1,4 +1,4 @@
-const { getStore } = require('@netlify/blobs');
+const { getStore, connectLambda } = require('@netlify/blobs');
 const YT = 'https://www.googleapis.com/youtube/v3';
 const CHANNEL_ID = process.env.YOUTUBE_CHANNEL_ID || 'UCFGEGUn-I6_BsifwF7ZzthQ';
 
@@ -53,8 +53,10 @@ async function createArticle(video) {
 // Netlify runs this on a schedule. It generates at most ONE missing article per run,
 // then saves it permanently so all visitors see the exact same article.
 exports.config = { schedule: '*/10 * * * *' };
-exports.handler = async () => {
+exports.handler = async (event) => {
   try {
+    // Initialize Blobs for this Lambda-compatibility invocation.
+    connectLambda(event);
     const store = getStore('mrbillion-articles');
     const channel = await yt('channels', { part: 'contentDetails', id: CHANNEL_ID });
     const playlistId = channel.items?.[0]?.contentDetails?.relatedPlaylists?.uploads;
