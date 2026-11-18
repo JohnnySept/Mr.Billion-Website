@@ -4,6 +4,7 @@
   "private": true,
   "description": "MR.BILLION creator website with shared, pre-generated Gemini articles",
   "dependencies": {
-    "@netlify/blobs": "^8.2.0"
+    "@netlify/blobs": "^8.2.0",
+    "pptxgenjs": "^4.0.1"
   }
 }
